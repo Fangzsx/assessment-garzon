@@ -1,4 +1,4 @@
-const request = require('./request.js');
+import request from './request.js';
 
 class SecunaAPI {
     static test(){
@@ -34,8 +34,12 @@ class SecunaAPI {
         return request('GET', '/reports', undefined, headers);
     }
 
-
-
+    static deleteReport(accessToken, id){
+        const headers = {
+            'Authorization' : 'Bearer ' + accessToken
+        }
+        return request('DELETE', `/reports/${id}`, undefined, headers);
+    }
 }
+export default SecunaAPI;
 
-module.exports = SecunaAPI;

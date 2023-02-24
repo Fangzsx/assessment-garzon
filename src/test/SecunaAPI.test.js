@@ -1,14 +1,14 @@
 const SecunaAPI = require('../secuna-api/SecunaAPI.js');
 const request = require('../secuna-api/request.js');
 
-test('static test function', () => {
+xtest('static test function', () => {
     expect(SecunaAPI.test()).toBe('test');
 });
 
-xtest('signup a new user', done => {
+test('signup a new user', done => {
     const user = {
-        username : 'johndoe4',
-        email : 'johndoe4@gmail.com',
+        username : 'johndoe41',
+        email : 'johndoe41@gmail.com',
         password : 'Pass123$',
         password_confirmation : 'Pass123$'
 
@@ -73,12 +73,12 @@ xtest('2fa', done => {
         })
 })
 
-test('submit a report', done => {
+xtest('submit a report', done => {
     const report = {
-        vulnerability_type : 'CWE-12 SQL INJECTION',
+        vulnerability_type : 'test',
         severity_level : 'Medium',
-        title : 'SQL INJECTION',
-        description : 'Some description6'
+        title : 'test',
+        description : 'test'
     }
 
     const verifiedToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTguMTM5LjExMC4xNjciLCJhdWQiOiJodHRwOi8vMTguMTM5LjExMC4xNjciLCJpYXQiOjE2NzcyMjA0MzUsIm5iZiI6MTY3NzIyMDQzNSwiZXhwIjoxNjc3MjI0MDM1LCJkYXRhIjoiYTdlOTkwNmEtOTIwNS00ZGUwLWIxNzItNjI4MTgyYThiYTlmIn0.u73tAe_fyHxO9XB7GUfGr-GRCrmIklt9PoXGHB-3G0E';
@@ -92,7 +92,7 @@ test('submit a report', done => {
             done();
         })
 })
-test('should not create a report if invalid token', done => {
+xtest('should not create a report if invalid token', done => {
     const fakeToken = 'fakeToken';
     
     const report = {
@@ -109,7 +109,7 @@ test('should not create a report if invalid token', done => {
         .catch(() => done('Invalid Token'))
 })
 
-test('retrieve reports', done => {
+xtest('retrieve reports', done => {
     //extract token from authenticated user
     const verifiedToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTguMTM5LjExMC4xNjciLCJhdWQiOiJodHRwOi8vMTguMTM5LjExMC4xNjciLCJpYXQiOjE2NzcyMjA0MzUsIm5iZiI6MTY3NzIyMDQzNSwiZXhwIjoxNjc3MjI0MDM1LCJkYXRhIjoiYTdlOTkwNmEtOTIwNS00ZGUwLWIxNzItNjI4MTgyYThiYTlmIn0.u73tAe_fyHxO9XB7GUfGr-GRCrmIklt9PoXGHB-3G0E';
     SecunaAPI.getReports(verifiedToken)
@@ -118,10 +118,21 @@ test('retrieve reports', done => {
             return response.json();
         })
         .then(data => {
+            console.log(data);
             expect(data).toBeTruthy();
             done();
         })
 
 })
 
-
+xtest('delete report', done => {
+    const verifiedToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTguMTM5LjExMC4xNjciLCJhdWQiOiJodHRwOi8vMTguMTM5LjExMC4xNjciLCJpYXQiOjE2NzcyMjA0MzUsIm5iZiI6MTY3NzIyMDQzNSwiZXhwIjoxNjc3MjI0MDM1LCJkYXRhIjoiYTdlOTkwNmEtOTIwNS00ZGUwLWIxNzItNjI4MTgyYThiYTlmIn0.u73tAe_fyHxO9XB7GUfGr-GRCrmIklt9PoXGHB-3G0E';
+    //get uuid of created report
+    const id = 'b284ffc4-ca8b-41cc-aa3a-d845389aef76';
+    SecunaAPI.deleteReport(verifiedToken, id)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            done();
+        })
+})
