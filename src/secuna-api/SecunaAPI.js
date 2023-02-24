@@ -20,6 +20,20 @@ class SecunaAPI {
         return request('POST', '/2fa/verify', code, headers);
     }
 
+    static submitReport(accessToken, report){
+        const headers = {
+            'Authorization' : 'Bearer ' + accessToken
+        }
+        return request('POST', '/reports', report, headers);
+    }
+
+    static getReports(accessToken){
+        const headers = {
+            'Authorization' : 'Bearer ' + accessToken
+        }
+        return request('GET', '/reports', undefined, headers);
+    }
+
 
 
 }
