@@ -67,7 +67,7 @@ export default function Home(){
         <div className='w-screen h-screen bg-gray-200'>
 
             <div className='flex flex-row h-screen'>
-                <div className='flex flex-col w-1/3 p-5 max-h-screen overflow-y-auto'>
+                <div className='w-1/3 flex flex-col p-5 max-h-screen overflow-y-auto'>
                     <span className='font-bold mb-3'>Signed in as: {user.email}</span>
                     <button className='self-start bg-gray-700 text-white' onClick={onRetrieveReportClick}>retrieve reports</button>
                     {
@@ -101,8 +101,8 @@ export default function Home(){
                       <div className='bg-white flex flex-col w-2/3 rounded p-5'>
                             <span className='font-bold mb-3'>Create Report</span>
                             <Input placeholder='vulnerability type' value={report.vulnerability_type} onChange={(e) => setReport({...report, vulnerability_type : e.target.value})}/>
-                            <select className='p-2 bg-white mb-3' value={report.severity_level} onChange={(e) => setReport({...report, severity_level : e.target.value})}>
-                                <option value="" disabled selected>select severity level</option>
+                            <select className='p-2 bg-white mb-3' defaultValue='' onChange={(e) => setReport({...report, severity_level : e.target.value})}>
+                                <option value="" disabled>select severity level</option>
                                 <option value='High'>high</option>
                                 <option value='Medium'>medium</option>
                                 <option value='Low'>low</option>
