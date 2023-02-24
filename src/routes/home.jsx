@@ -64,7 +64,7 @@ export default function Home(){
     }
 
     return(
-        <div className='w-screen h-screen bg-gray-300'>
+        <div className='w-screen h-screen bg-gray-200'>
 
             <div className='flex flex-row h-screen'>
                 <div className='flex flex-col w-1/3 p-5 max-h-screen overflow-y-auto'>
