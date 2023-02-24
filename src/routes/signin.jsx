@@ -3,7 +3,7 @@ import Input from '../components/input/input.component.jsx';
 import SecunaAPI from '../secuna-api/SecunaAPI.js';
 import { useNavigate } from 'react-router-dom';
 import { setSession } from '../features/user/userSlice.js';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 export default function SignIn(){
     const [showModal, setShowModal ] = useState(false);
@@ -15,7 +15,6 @@ export default function SignIn(){
     const [code, setCode ] = useState('');
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const token = useSelector(state => state.user.token);
 
     const onSubmitClick = () => {
         SecunaAPI.signin(user)
