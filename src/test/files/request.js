@@ -4,7 +4,7 @@ const defaultHeaders = {
     'Accept' : 'application/json'
 }
 
-export default function request(method, path, body, headers){
+function request(method, path, body, headers){
     const finalHeaders = {
     ...defaultHeaders,
     ...headers,
@@ -16,4 +16,4 @@ export default function request(method, path, body, headers){
         body : JSON.stringify(body)
     })
 }
-//module.exports = request;
+module.exports = request;

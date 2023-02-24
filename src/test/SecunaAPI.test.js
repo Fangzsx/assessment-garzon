@@ -1,11 +1,11 @@
-const SecunaAPI = require('../secuna-api/SecunaAPI.js');
-const request = require('../secuna-api/request.js');
+const SecunaAPI = require('./files/SecunaAPI.js');
+const request = require('./files/request.js');
 
 xtest('static test function', () => {
     expect(SecunaAPI.test()).toBe('test');
 });
 
-test('signup a new user', done => {
+xtest('signup a new user', done => {
     const user = {
         username : 'johndoe41',
         email : 'johndoe41@gmail.com',
@@ -58,9 +58,9 @@ xtest('signin a user', done => {
         .catch(() => done('SIGNIN : Failed'));
 })
 
-xtest('2fa', done => {
+test('2fa', done => {
     //fetch access token from previous signin via copy paste and enter the code in google authenticator
-    const accessToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTguMTM5LjExMC4xNjciLCJhdWQiOiJodHRwOi8vMTguMTM5LjExMC4xNjciLCJpYXQiOjE2NzcyMTg5ODIsIm5iZiI6MTY3NzIxODk4MiwiZXhwIjoxNjc3MjIyNTgyLCJkYXRhIjoiQVFGUFBKSkdGRUFFQUNHNSJ9.I-eKtBBerqj_tCbROOUnrlDTIsTH6wgwnQvviSOpPKw';
+    const accessToken='eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTguMTM5LjExMC4xNjciLCJhdWQiOiJodHRwOi8vMTguMTM5LjExMC4xNjciLCJpYXQiOjE2NzcyMzk1OTgsIm5iZiI6MTY3NzIzOTU5OCwiZXhwIjoxNjc3MjQzMTk4LCJkYXRhIjoiQVBZNDJTMlc3Q1ZGTkpZSiJ9.asx68vTx96i4ZjBzVCUUjNhNJ-X3uPr12PIRtpsGbG4';
     const code = {
         code : '294361'
     }
@@ -80,7 +80,6 @@ xtest('submit a report', done => {
         title : 'test',
         description : 'test'
     }
-
     const verifiedToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTguMTM5LjExMC4xNjciLCJhdWQiOiJodHRwOi8vMTguMTM5LjExMC4xNjciLCJpYXQiOjE2NzcyMjA0MzUsIm5iZiI6MTY3NzIyMDQzNSwiZXhwIjoxNjc3MjI0MDM1LCJkYXRhIjoiYTdlOTkwNmEtOTIwNS00ZGUwLWIxNzItNjI4MTgyYThiYTlmIn0.u73tAe_fyHxO9XB7GUfGr-GRCrmIklt9PoXGHB-3G0E';
     SecunaAPI.submitReport(verifiedToken, report)
         .then(response => {

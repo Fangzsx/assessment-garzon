@@ -3,6 +3,7 @@ import Input from '../components/input/input.component.jsx';
 import SecunaAPI from '../secuna-api/SecunaAPI.js';
 import { useNavigate } from 'react-router-dom';
 
+
 export default function SignUp(){
     const [showModal, setShowModal ] = useState(false);
     const [message, setMessage ] = useState('');

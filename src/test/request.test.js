@@ -1,4 +1,4 @@
-const request = require('../secuna-api/request.js');
+const request = require('./files/request.js');
 
 xtest('should perform a post request', done => {
     //make sure that the user is not yet registered.
