@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Input from '../components/input/input.component.jsx';
 import SecunaAPI from '../secuna-api/SecunaAPI.js';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 import { setSession } from '../features/user/userSlice.js';
 import { useDispatch } from 'react-redux';
 
@@ -13,6 +13,7 @@ export default function SignIn(){
         password : '',
     })
     const [code, setCode ] = useState('');
+    const [errors, setErrors ] = useState([]);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -25,6 +26,10 @@ export default function SignIn(){
                 setData(data);
                 if(data.status === 'success'){
                     navigate('/signin');
+                }
+                if(data.errors){
+                    const errorArray = Object.values(data.errors);
+                    setErrors(errorArray);
                 }
             })
     }
@@ -58,6 +63,13 @@ export default function SignIn(){
                         <div className='flex flex-col p-5 items-center justify-center bg-white pt-4 text-center sm:block min-h-0 rounded'>
                             <span className='font-bold'>Message</span>
                             <p className='p-5'>{data.message}</p>
+                                {
+                                    errors.length > 0 && errors.map(error => {
+                                        return (
+                                            <p>* {error}</p>
+                                        )
+                                    })
+                                }
                             <div className='w-full flex justify-center'>
                                 <img src={data.two_fa_qr_url}/>
                             </div>
@@ -70,17 +82,20 @@ export default function SignIn(){
                                 )
                             }
 
-                            <button className='bg-red-400 text-white mx-2' onClick={onCloseClick}>close</button>
+                            <button className='bg-red-400 text-white m-3' onClick={onCloseClick}>close</button>
                         </div>
                     </div>
                     
                 )
             }
-            <div className='flex flex-col p-3 bg-white rounded'>
-                <span className='text-xl self-center font-bold'>Signin</span>
+            <div className='flex flex-col justify-center items-center p-3 bg-white rounded'>
+                <div className='w-full bg-gray-700 flex justify-center text-white mb-3 p-3 rounded'>
+                    <span className='font-semibold'>Signin</span>
+                </div>
                 <Input placeholder='email' type='email' onChange={(e) => setUser({...user, email : e.target.value})}/>    
                 <Input placeholder='password' type='password' onChange={e => setUser({...user, password : e.target.value})}/>    
-                <button className='bg-gray-700 text-white mt-5' onClick={onSubmitClick}>Submit</button>    
+                <button className='bg-gray-700 text-white mt-5 mb-5 w-full' onClick={onSubmitClick}>Submit</button>
+                <NavLink className='m-3' to='/signup'>Doesn't have an account? Signup</NavLink>
             </div>
           </div>
     )
