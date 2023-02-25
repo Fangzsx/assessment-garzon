@@ -1,11 +1,14 @@
 import Input from '../components/input/input.component.jsx';
 import Report from '../components/report/report.component.jsx';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import SecunaAPI from '../secuna-api/SecunaAPI.js';
+import { useNavigate } from 'react-router-dom';
+import SignIn from './signin.jsx';
 
 export default function Home(){
     const user = useSelector(state => state.user.value);
+    const navigate = useNavigate();
     const [ showModal, setShowModal ] = useState(false);
     const [ report, setReport ] = useState({
         vulnerability_type : '',
@@ -16,8 +19,10 @@ export default function Home(){
     const [ reports, setReports ] = useState([]);
     const [ errors, setErrors ] = useState([]);
 
+    const storageUser = JSON.parse(localStorage.getItem('user'));
+
     const onRetrieveReportClick = () => {
-        SecunaAPI.getReports(user.accessToken)
+        SecunaAPI.getReports(user.accessToken || storageUser.accessToken)
             .then(response => response.json())
             .then(data => {
                 setReports(data.reports);
@@ -27,10 +32,9 @@ export default function Home(){
     const onSubmitClick = (event) => {
         setShowModal(true);
         event.preventDefault();
-        SecunaAPI.submitReport(user.accessToken, report)
+        SecunaAPI.submitReport(user.accessToken || storageUser.accessToken, report)
             .then(response => response.json())
             .then(data => {
-                console.log(data);
                 setMessage(data.message);
                 setReport({
                     vulnerability_type : '',
@@ -50,10 +54,9 @@ export default function Home(){
 
     const onDeleteClick = (index) => {
         const toDelete = reports[index];
-        SecunaAPI.deleteReport(user.accessToken, toDelete.uuid)
+        SecunaAPI.deleteReport(user.accessToken || storageUser.accessToken, toDelete.uuid)
             .then(response => response.json())
             .then(data => {
-                console.log(data);
                 setReports(data.reports);
             })
     }
@@ -63,12 +66,20 @@ export default function Home(){
         setErrors([]);
     }
 
+    const onSignOutClick = () => {
+        localStorage.clear();
+        navigate('/signin');
+    }
+
+    if (Object.keys(user).length === 0 && !storageUser) {
+         return <SignIn />
+    }
+
     return(
         <div className='w-screen h-screen bg-gray-200'>
-
             <div className='flex flex-row h-screen'>
                 <div className='w-1/3 flex flex-col p-5 max-h-screen overflow-y-auto'>
-                    <span className='font-bold mb-3'>Signed in as: {user.email}</span>
+                    <span className='font-bold mb-3'>Signed in as: { user.email || storageUser.email}</span>
                     <button className='self-start bg-gray-700 text-white' onClick={onRetrieveReportClick}>retrieve reports</button>
                     {
                         reports && reports.map( (report, index) => {
@@ -78,7 +89,8 @@ export default function Home(){
                         })
                     }
                 </div>
-                <div className='bg-gray-100 w-2/3 flex justify-center items-center'>
+                <div className='bg-gray-100 w-2/3 flex flex-col justify-center items-center'>
+                    <button className='bg-red-400 text-white m-10 self-end' onClick={onSignOutClick}>signout</button>
                     {
                         showModal && (
                             <div className='fixed z-10'>

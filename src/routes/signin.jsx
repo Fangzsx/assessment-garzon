@@ -21,11 +21,11 @@ export default function SignIn(){
         SecunaAPI.signin(user)
             .then(response => response.json())
             .then(data => {
-                console.log(data)
                 setShowModal(true);
                 setData(data);
                 if(data.status === 'success'){
-                    navigate('/signin');
+                    console.log('localStorage'. localStorage);
+                    //navigate('/signin');
                 }
                 if(data.errors){
                     const errorArray = Object.values(data.errors);
@@ -42,12 +42,16 @@ export default function SignIn(){
     }
 
     const onVerifyClick = () => {
-        console.log(code);
         SecunaAPI.verify(data.access_token, { code : code})
             .then(response => response.json())
             .then(data => {
-                dispatch(setSession({email: user.email, accessToken : data.access_token}));
+                const userObject = { email : user.email, accessToken : data.access_token };
+                dispatch(setSession(userObject));
+
+                //save to localStorage
+                localStorage.setItem('user', JSON.stringify(userObject));
                 navigate('/home');
+
             })
     }
 
