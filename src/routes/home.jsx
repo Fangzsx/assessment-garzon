@@ -107,7 +107,6 @@ export default function Home(){
                                     <button className='bg-red-400 text-white m-3' onClick={onCloseClick}>close</button>
                                 </div>
                             </div>
-                            
                         )
                     }
                       <div className='bg-white flex flex-col w-2/3 rounded p-5'>
