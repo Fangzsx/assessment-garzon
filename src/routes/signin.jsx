@@ -45,13 +45,16 @@ export default function SignIn(){
         SecunaAPI.verify(data.access_token, { code : code})
             .then(response => response.json())
             .then(data => {
+                console.log('data',data);
+                if(data.access_token){
+
                 const userObject = { email : user.email, accessToken : data.access_token };
                 dispatch(setSession(userObject));
 
                 //save to localStorage
                 localStorage.setItem('user', JSON.stringify(userObject));
                 navigate('/home');
-
+                }
             })
     }
 
