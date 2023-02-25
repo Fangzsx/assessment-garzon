@@ -14,6 +14,7 @@ export default function SignIn(){
     })
     const [code, setCode ] = useState('');
     const [errors, setErrors ] = useState([]);
+    const [verifyErrors, setVerifyErrors ] = useState('');
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -23,10 +24,6 @@ export default function SignIn(){
             .then(data => {
                 setShowModal(true);
                 setData(data);
-                if(data.status === 'success'){
-                    console.log('localStorage'. localStorage);
-                    //navigate('/signin');
-                }
                 if(data.errors){
                     const errorArray = Object.values(data.errors);
                     setErrors(errorArray);
@@ -35,17 +32,15 @@ export default function SignIn(){
     }
 
     const onCloseClick = () => {
-        if(data.message === 'Registration successful.'){
-            navigate('/signin');
-        }
         setShowModal(false);
+        setErrors([]);
+        setVerifyErrors('');
     }
 
     const onVerifyClick = () => {
         SecunaAPI.verify(data.access_token, { code : code})
             .then(response => response.json())
             .then(data => {
-                console.log('data',data);
                 if(data.access_token){
 
                 const userObject = { email : user.email, accessToken : data.access_token };
@@ -55,6 +50,9 @@ export default function SignIn(){
                 localStorage.setItem('user', JSON.stringify(userObject));
                 navigate('/home');
                 }
+
+                setVerifyErrors(data.message);
+
             })
     }
 
@@ -90,6 +88,14 @@ export default function SignIn(){
                             }
 
                             <button className='bg-red-400 text-white m-3' onClick={onCloseClick}>close</button>
+                            
+                                {
+                                    verifyErrors && (
+                                        <p className='text-red-500'>* {verifyErrors}</p>
+                                    )
+                                }
+
+                            
                         </div>
                     </div>
                     

@@ -100,7 +100,7 @@ export default function Home(){
                                         {
                                             errors.length > 0 && errors.map(error => {
                                                 return (
-                                                    <p>* {error}</p>
+                                                    <p className='text-red-500'>* {error}</p>
                                                 )
                                             })
                                         }
