@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import SignIn from './signin.jsx';
 
 export default function Home(){
-    //test update feature1 version 3
+    //test update feature1 version 4 from feature branch
     const user = useSelector(state => state.user.value);
     const navigate = useNavigate();
     const [ showModal, setShowModal ] = useState(false);
