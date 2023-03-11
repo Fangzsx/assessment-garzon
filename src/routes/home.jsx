@@ -8,11 +8,15 @@ import SignIn from './signin.jsx';
 
 export default function Home(){
 <<<<<<< HEAD
+<<<<<<< HEAD
     //test update feature1 version 3
     //some enhancements for feature 2
 =======
     //test update feature1 version 4 from feature branch
 >>>>>>> 7b38fd8 (version 4)
+=======
+    //test update feature1 version 4 from feature branch
+>>>>>>> 7b38fd88f3d10d2006880e98c73bf0f8ac5c432a
     const user = useSelector(state => state.user.value);
     const navigate = useNavigate();
     const [ showModal, setShowModal ] = useState(false);
