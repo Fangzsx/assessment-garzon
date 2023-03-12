@@ -10,8 +10,9 @@ export default function Home(){
     //test update feature1 version 3
     //some enhancements for feature 2
     //test update feature1 version 4 from feature branch
+    //enhance feature1 version 5
 
-    //ehancement of feature2 version2
+    //ehancement of feature2 version2 -> fixed by feature1 developer
     const user = useSelector(state => state.user.value);
     const navigate = useNavigate();
     const [ showModal, setShowModal ] = useState(false);
