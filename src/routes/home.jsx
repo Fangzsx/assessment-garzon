@@ -11,6 +11,7 @@ export default function Home(){
     //some enhancements for feature 2
     //test update feature1 version 4 from feature branch
     //enhance feature1 version 5
+    //ehnace feature1 version 6
 
     //ehancement of feature2 version2 -> fixed by feature1 developer
     //feature 2 version 3
