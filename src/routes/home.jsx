@@ -13,6 +13,7 @@ export default function Home(){
     //enhance feature1 version 5
 
     //ehancement of feature2 version2 -> fixed by feature1 developer
+    //feature 2 version 3
     const user = useSelector(state => state.user.value);
     const navigate = useNavigate();
     const [ showModal, setShowModal ] = useState(false);
